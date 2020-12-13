@@ -127,7 +127,8 @@ async function triggerPrediction(id) {
         .sort(function (a, b) {
             return b.probability - a.probability;
         })
-        .slice(0, 2);
+		.slice(0, 2);
+	$("#spinner-" + id).hide();
 
     $("#prediction-list-" + id).empty();
     $("#traffic-information-" + id).empty();
@@ -154,7 +155,7 @@ async function triggerPrediction(id) {
             );
         }
     });
-    $("#spinner-" + id).hide();
+    
 }
 
 function determineTraffic(trafficValue, id) {

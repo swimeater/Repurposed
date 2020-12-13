@@ -165,13 +165,13 @@ function determineTraffic(trafficValue, id) {
     let trafficInfo = trafficLanes[id];
     trafficInfo.previousDurationInMinutes = trafficInfo.durationInMinutes;
 
-    if (trafficValuePercentage > 80) {
+    if (trafficValuePercentage > 90) {
         trafficInfo.durationInMinutes = 5;
         trafficInfo.information = "Heavy Traffic";
         // trafficLanes[0] = trafficInfo;
         return true;
     }
-    if (trafficValuePercentage > 75) {
+    if (trafficValuePercentage > 70) {
         trafficInfo.durationInMinutes = 4;
         trafficInfo.information = "Moderate Traffic";
         // trafficLanes[0] = trafficInfo;

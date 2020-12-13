@@ -49,39 +49,34 @@ class TrafficLane {
     }
 }
 
-let trafficLanes = [
-	new TrafficLane(1),
-	new TrafficLane(2),
-];
+let trafficLanes = [new TrafficLane(1), new TrafficLane(2)];
 
 let imageLoaded = false;
-$("#traffic-lanes").on('change', '.image-selector', function () {
-	let id = $(this).data("id");
-	$("#spinner-" + id).hide();
-	
+$("#traffic-lanes").on("change", ".image-selector", function () {
+    let id = $(this).data("id");
+    $("#spinner-" + id).hide();
+
     imageLoaded = false;
-	let reader = new FileReader();
-	console.log("id", id);
+    let reader = new FileReader();
+    console.log("id", id);
     reader.onload = function () {
-		let $currentImage =$("#selected-image-" + id).get(0);
-		$currentImage.onload = function () {
-			$("#prediction-list-" + id).empty();
-            triggerPrediction(id);	
+        let $currentImage = $("#selected-image-" + id).get(0);
+        $currentImage.onload = function () {
+            $("#prediction-list-" + id).empty();
+            triggerPrediction(id);
         };
         let dataURL = reader.result;
         $("#selected-image-" + id).attr("src", dataURL);
-		imageLoaded = true;
-        
-	};
+        imageLoaded = true;
+    };
 
     let file = $(this).prop("files")[0];
     reader.readAsDataURL(file);
 });
 
-$("#traffic-lanes").on('click', '.image-selector', function () {
-	let id = $(this).data("id");
-$("#spinner-" + id).show();
-
+$("#traffic-lanes").on("click", ".image-selector", function () {
+    let id = $(this).data("id");
+    $("#spinner-" + id).show();
 });
 
 let model;
@@ -93,13 +88,10 @@ $(document).ready(async function () {
     model = await tf.loadGraphModel("model/model.json");
     console.log("Model loaded.");
     $(".progress-bar").hide();
-	modelLoaded = true;
-	trafficLanes.forEach((trafficLane) => {
-		$("#traffic-lanes").append(
-			trafficLane.html
-		)
-	})
-
+    modelLoaded = true;
+    trafficLanes.forEach((trafficLane) => {
+        $("#traffic-lanes").append(trafficLane.html);
+    });
 });
 
 async function triggerPrediction(id) {
@@ -115,7 +107,7 @@ async function triggerPrediction(id) {
     let image = $("#selected-image-" + id).get(0);
 
     // Pre-process the image
-	console.log("Loading image...");
+    console.log("Loading image...");
     let tensor = tf.browser
         .fromPixels(image, 3)
         .resizeNearestNeighbor([224, 224]) // change the image size
@@ -161,8 +153,8 @@ async function triggerPrediction(id) {
                 } ${trafficInfo.durationInMinutes} minutes </li>`
             );
         }
-	});
-	$("#spinner-" + id).hide();
+    });
+    $("#spinner-" + id).hide();
 }
 
 function determineTraffic(trafficValue, id) {

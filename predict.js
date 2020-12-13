@@ -54,7 +54,7 @@ let trafficLanes = [new TrafficLane(1), new TrafficLane(2)];
 let imageLoaded = false;
 $("#traffic-lanes").on("change", ".image-selector", function () {
     let id = $(this).data("id");
-    $("#spinner-" + id).hide();
+    // $("#spinner-" + id).hide();
 
     imageLoaded = false;
     let reader = new FileReader();
@@ -162,7 +162,7 @@ function determineTraffic(trafficValue, id) {
     let trafficValuePercentage = parseFloat(trafficValue * 100).toFixed(4);
     console.log("trafficValuePercentage", trafficValuePercentage);
     let trafficInfo = trafficLanes[id];
-    trafficInfo.durationInMinutes = trafficInfo.previousDurationInMinutes;
+    trafficInfo.previousDurationInMinutes = trafficInfo.durationInMinutes;
 
     if (trafficValuePercentage > 80) {
         trafficInfo.durationInMinutes = 5;
